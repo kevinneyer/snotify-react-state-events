@@ -8,7 +8,7 @@ const SongList = props => {
 
     
     const makeSongs = () => songArray.map(song => {
-       return <SongItem title={song.title} artist={song.artist}/>
+       return <SongItem title={song.title} artist={song.artist} id={song.id}/>
     })
 
     return (

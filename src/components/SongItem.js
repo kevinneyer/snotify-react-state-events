@@ -19,12 +19,24 @@ class SongItem extends React.Component {
         })
     }
 
-    heartFill = () => {
+    heartFill = (event) => {
+        let newEvent = event.target.id
         this.setState(previousState => {
             return {
                 favorite: !previousState.favorite
             }
         })
+        console.log(newEvent)
+        fetch(`http://localhost:6001/songs/${newEvent}`, {
+            Method: 'PATCH',
+            HEADERS: {
+                'Content-type':'application/json',
+                'Accept':'application/json'
+            },
+            Body: JSON.stringify({favorite: !this.state.favorite})
+        })
+        .then(res => res.json())
+        .then(data => console.log(data))
     }
 
     render() {
@@ -34,7 +46,7 @@ class SongItem extends React.Component {
             <td>{this.props.artist}</td>
             <td><button onClick={null /* Put your click handler here */}>Play Now</button></td>
             <td><button onClick={null /* Put your click handler here */}>Add to Queue</button></td>
-            <td onClick={this.heartFill}>{this.state.favorite ? "💚" : "♡"}</td>
+            <td id={this.props.id} onClick={this.heartFill}>{this.state.favorite ? "💚" : "♡"}</td>
             <td onClick={this.handleClick}>Likes: {this.state.likes}</td>
         </tr>
     )
